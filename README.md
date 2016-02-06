@@ -14,3 +14,11 @@ For this to happen the following optimizations were made to the page:
 * For the javascript, I made the two scripts load asynchronously and uglified perfmatters.js with grunt-contrib-uglify.
 
 * As suggested in the Udacity Foruns, I went to the link provided by google with the Open Sans font and inlined all of it using @font-face in the style tag in the index.html effectively saving another download.
+
+## Part 2 Optimizations
+
+* Followed Cameron's advice from lesson 5 of the BRO course and completely refactored the changePizzaSizes function: traded the queryselectorAll for the faster getElementsbyClassName, cached the length of the array in a variable outside of the loop and got rid of the performance-lagging worthless dx function.
+
+* For the updatePositions function, I followed mcs' advice in the [thread](https://discussions.udacity.com/t/project-4-how-do-i-optimize-the-background-pizzas-for-loop/36302). Apart from the optimization specified above, I also followed his advice of refactoring the loop to take advantage of the fact that the values for scrollTop were constant (5 values) for each iteration. That said, I made a first loop to cache the constant values in an array and then in the second the parse variable was calculated.
+
+* Finally, I followed the advice in [here](https://github.com/udacity/fend-office-hours/tree/master/Web%20Optimization/Effective%20Optimizations%20for%2060%20FPS) and added backface-visibility: hidden to the .mover css avoiding that the whole screen is repainted every time we scroll, limiting the painting process to the scrolling pizzas only. (Warning: This change may impact performance in older hardware and mobile phones due to higher VRAM requirements)
