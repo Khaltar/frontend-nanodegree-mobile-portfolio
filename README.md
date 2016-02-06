@@ -1,5 +1,9 @@
 # Website Performance Optimization portfolio project
 
+## Running the application
+Either fork the repo and clone it to your own desktop using gitBash or gitHub desktop and then access via index.html.
+If you don't know how to access it using git, a webpage was hosted using the gh-pages branch [here](http://khaltar.github.io/frontend-nanodegree-mobile-portfolio/) that you can use to check pagespeeds insight at google or to see the optimizations.
+
 ## Part 1 Optimizations
 
 A final speed of 92 for mobile phones and 95 for desktop was obtained according to this.
