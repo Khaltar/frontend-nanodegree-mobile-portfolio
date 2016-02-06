@@ -26,3 +26,8 @@ For this to happen the following optimizations were made to the page:
 * For the updatePositions function, I followed mcs' advice in the [thread](https://discussions.udacity.com/t/project-4-how-do-i-optimize-the-background-pizzas-for-loop/36302). Apart from the optimization specified above, I also followed his advice of refactoring the loop to take advantage of the fact that the values for scrollTop were constant (5 values) for each iteration. That said, I made a first loop to cache the constant values in an array and then in the second the parse variable was calculated.
 
 * Finally, I followed the advice in [here](https://github.com/udacity/fend-office-hours/tree/master/Web%20Optimization/Effective%20Optimizations%20for%2060%20FPS) and added backface-visibility: hidden to the .mover css avoiding that the whole screen is repainted every time we scroll, limiting the painting process to the scrolling pizzas only. (Warning: This change may impact performance in older hardware and mobile phones due to higher VRAM requirements)
+
+* One other change had to be made to achieve proper optimization. At line 534, a function to generate the number of background pizzas starts. Originally it creates 200 pizzas (a number astronomically high for the amount of pizzas that are needed to fill the screen at a time). As so I reduced it to 24 , a multiple of the current number of columns value (cols). TODO: A better way would be to dynamically calculate the number of pizzas needed to fill the screen based on browser window resolution.
+
+## Licence
+This project is licensed under a MIT Licence.
