@@ -55,6 +55,6 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-imagemin');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-critical');
-    grunt.registerTask('default', ['critical','htmlmin','cssmin','uglify']);
-    grunt.registerTask('dev', ['imagemin']);
+    grunt.registerTask('default', ['htmlmin','cssmin','uglify','imagemin']);
+    grunt.registerTask('dev', ['imagemin','critical']);
 }
