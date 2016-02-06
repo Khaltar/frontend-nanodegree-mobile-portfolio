@@ -420,41 +420,32 @@ var resizePizzas = function(size) {
   }
 
   changeSliderLabel(size);
-
-   // Returns the size difference to change a pizza element from one size to another. Called by changePizzaSlices(size).
-  function determineDx (elem, size) {
-    var oldWidth = elem.offsetWidth;
-    var windowWidth = document.querySelector("#randomPizzas").offsetWidth;
-    var oldSize = oldWidth / windowWidth;
-
-    // Optional TODO: change to 3 sizes? no more xl?
-    // Changes the slider value to a percent width
-    function sizeSwitcher (size) {
+   // Changes made as suggested by Cameron in Lesson 5 of BRO
+    
+   // Iterates through pizza elements on the page and changes their widths.
+  function changePizzaSizes(size) {
       switch(size) {
         case "1":
-          return 0.25;
+          newWidth = 25;
+          break;
         case "2":
-          return 0.3333;
+          newWidth = 33.3;
+          break;
         case "3":
-          return 0.5;
+          newWidth = 50;
+          break;
         default:
           console.log("bug in sizeSwitcher");
       }
-    }
-
-    var newSize = sizeSwitcher(size);
-    var dx = (newSize - oldSize) * windowWidth;
-
-    return dx;
-  }
-
-  // Iterates through pizza elements on the page and changes their widths
-  function changePizzaSizes(size) {
-    for (var i = 0; i < document.querySelectorAll(".randomPizzaContainer").length; i++) {
-      var dx = determineDx(document.querySelectorAll(".randomPizzaContainer")[i], size);
-      var newwidth = (document.querySelectorAll(".randomPizzaContainer")[i].offsetWidth + dx) + 'px';
-      document.querySelectorAll(".randomPizzaContainer")[i].style.width = newwidth;
-    }
+      // Iterates through pizza elements on the page and changes their widths
+      // Instead of calling QuerySelectorAll, abstracted to randomPizzas varible and used a faster getElementsByClassName
+      var randomPizzas = document.getElementsByClassName("randomPizzaContainer");
+      // Cached the length of the randomPizzas array into a variable to be faster
+      var len = randomPizzas.length;
+      // Changes to the loop as suggested by Cameron in video of Lesson 5 of BRO
+      for (var i = 0; i < len; i++) {
+          randomPizzas[i].style.width = newWidth + "%";
+      }
   }
 
   changePizzaSizes(size);
@@ -500,11 +491,23 @@ function logAverageFrame(times) {   // times is the array of User Timing measure
 // Moves the sliding background pizzas based on scroll position
 function updatePositions() {
   frame++;
+  var i;
   window.performance.mark("mark_start_frame");
-
-  var items = document.querySelectorAll('.mover');
-  for (var i = 0; i < items.length; i++) {
-    var phase = Math.sin((document.body.scrollTop / 1250) + (i % 5));
+  // Changed querySelectorAll for the faster getElementsbyClassName
+  var items = document.getElementsByClassName('mover');
+  // Cached length of the array to perform faster computations
+  var len = items.length;
+  // Taking the document.body.scrollTop / 1250 out of the loop body as it is a constant value
+  var topScroll = document.body.scrollTop / 1250;
+    // For the loop optimization, followed mcs advice in https://discussions.udacity.com/t/project-4-how-do-i-optimize-the-background-pizzas-for-loop/36302
+    // With console debugging we can see the same five values are repeated in each iteration so if we save those 5 values we can get better performance.
+  var constantArray = [];
+  for (i = 0; i < 5; i++) {
+      constantArray.push(Math.sin((topScroll)+i));
+  }
+    
+  for (var i = 0; i < len; i++) {
+    var phase = constantArray[i % 5];
     items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
   }
 
