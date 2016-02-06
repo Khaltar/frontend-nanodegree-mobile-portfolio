@@ -537,7 +537,7 @@ document.addEventListener('DOMContentLoaded', function() {
   var elem;
   var movingPizzas = document.getElementById("movingPizzas1");
   // changed number of pizzas to 24 a multiple of the number of columns.
-  // TODO: improve this to respond dynamically to screen size using window.screen.height -> No idea yet on how to do this
+  // TODO: improve this to respond dynamically to screen size using window.screen.height
   for (var i = 0; i < 24; i++) {
     elem = document.createElement('img');
     elem.className = 'mover';
